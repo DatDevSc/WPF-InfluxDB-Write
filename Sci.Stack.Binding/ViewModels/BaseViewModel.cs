@@ -1,10 +1,12 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace Influx.Write
+namespace Sci.Stack.Binding.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
@@ -15,6 +17,11 @@ namespace Influx.Write
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public static bool StringIsNEs(params string?[] strings)
+        {
+            return strings.All(s => string.IsNullOrEmpty(s));
         }
     }
 

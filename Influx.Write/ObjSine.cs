@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,7 +16,11 @@ namespace Influx.Write
         private int _Value = 0;
         public int Value { get { return _Value; } set { _Value = value; RaiseInflux(); OnPropertyChanged(); } }
 
+        private double _ExecutionTime = 0;
+        public double ExecutionTime { get { return _ExecutionTime; } set { _ExecutionTime = value; RaiseInflux(); OnPropertyChanged(); } }
+
         private bool WriteEnable;
+        Stopwatch stopwatch = new();
 
         public ObjSine(string FieldName_)
         {
@@ -27,17 +32,21 @@ namespace Influx.Write
             WriteEnable = WriteEnable_;
             while (!token.IsCancellationRequested)
             {
+                stopwatch.Start();
                 Value = Sinewave[Count];
+                if (WriteEnable)
+                    Influxdata.Instance.WriteBatchPoint("WPF", "Sinewave", "Sine1000", FieldName, DateTime.UtcNow, Value);
                 Count++;
                 if (Count >= Sinewave.Count) Count = 0;
-                await Task.Delay(1);
+                //await Task.Delay(1);
+                ExecutionTime = stopwatch.Elapsed.TotalMilliseconds;
+                stopwatch.Reset();
             }
         }
 
         private void RaiseInflux()
         {
-            if (WriteEnable)
-                Influxdata.Instance.WriteBatchPoint("WPF", "Sinewave", "Sine1000", FieldName, DateTime.UtcNow, Value);
+
         }
     }
 }

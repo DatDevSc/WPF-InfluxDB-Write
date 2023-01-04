@@ -71,13 +71,17 @@
             RowHeight="20">
             <DataGrid.Columns>
                 <DataGridTextColumn
-                    Width="300"
+                    Width="200"
                     Binding="{Binding FieldName}"
                     Header="Field Name" />
                 <DataGridTextColumn
                     Width="200"
                     Binding="{Binding Value}"
                     Header="Value" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding ExecutionTime}"
+                    Header="Execution Time" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
