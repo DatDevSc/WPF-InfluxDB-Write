@@ -9,61 +9,6 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <UserControl.Resources>
-
-        <Style x:Key="RightAlignedLabelStyle" TargetType="s:DefaultTickLabel">
-            <Setter Property="HorizontalAnchorPoint" Value="Right" />
-        </Style>
-
-        <Style x:Key="YAxisStyle" TargetType="s:AxisBase">
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="VisibleRange" Value="-2, 2" />
-            <Setter Property="VisibleRangeLimit" Value="-2, 2" />
-            <Setter Property="AutoRange" Value="Never" />
-            <Setter Property="AxisAlignment" Value="Left" />
-            <Setter Property="DrawMinorGridLines" Value="False" />
-            <Setter Property="DrawMinorTicks" Value="False" />
-            <Setter Property="DrawMajorGridLines" Value="False" />
-            <Setter Property="DrawMajorBands" Value="False" />
-            <Setter Property="TickLabelStyle" Value="{StaticResource RightAlignedLabelStyle}" />
-        </Style>
-
-        <!--  Optionally replace the default StackPanel for the Axis Container. In this example we create a Grid  -->
-        <!--  with 4x rows and one column. Then use Grid.Row on the actual Axis instances to place in the correct rows  -->
-        <!--    -->
-        <!--  By Default SciChart will place YAxes stacked horizontally, but using this feature we can override  -->
-        <!--  to place vertically on the same chart surface  -->
-        <ItemsPanelTemplate x:Key="YAxesPanel">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-            </Grid>
-        </ItemsPanelTemplate>
-
-        <LinearGradientBrush x:Key="MountainFillBrush" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Offset="0" Color="#A83376E5" />
-            <GradientStop Offset="1" Color="#333376E5" />
-        </LinearGradientBrush>
-
-    </UserControl.Resources>
     <Grid>
         <s:SciChartSurface
             x:Name="sciChart"
@@ -71,20 +16,9 @@
             RenderableSeries="{Binding RenderableSeries}"
             RightAxesPanelTemplate="{Binding YAxesPanelTemplate}"
             YAxes="{Binding YAxes}">
-
-            <!--  Create an X Axis with Growby  -->
             <s:SciChartSurface.XAxis>
                 <s:DateTimeAxis />
             </s:SciChartSurface.XAxis>
-
-            <!--<s:SciChartSurface.ChartModifier>
-                <s:ModifierGroup>
-                    <s:RubberBandXyZoomModifier IsXAxisOnly="True" />
-                    <s:ZoomExtentsModifier />
-                    <s:CursorModifier ShowAxisLabels="False" ShowTooltip="False" />
-                </s:ModifierGroup>
-            </s:SciChartSurface.ChartModifier>-->
-
         </s:SciChartSurface>
     </Grid>
 </UserControl>

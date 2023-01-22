@@ -4,6 +4,8 @@ using Sci.Stack.Binding.Models;
 using SciChart.Charting.Visuals.Axes;
 using SciChart.Charting.Visuals.RenderableSeries;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -44,27 +46,37 @@ namespace Sci.Stack.Binding.ViewModels
 
         private void ChartUpdate()
         {
+
             YAxes.Clear();
             RenderableSeries.Clear();
             int CountGraph = 0;
+            int TotalIsGraph = DataInfos.Where(x => x.IsGraph).Count();
+            YAxesPanelTemplate = HelperSciChartXaml.GetItemsPanelTemplate(TotalIsGraph);
+            var YAxisStyle = Application.Current.FindResource("YAxisStyle") as Style;
             foreach (var item in DataInfos)
             {
                 if (item.IsGraph)
                 {
-                    NumericAxis NewYAxix = new() { Id = item.DataName, AxisTitle = item.DataName };
+                    NumericAxis NewYAxix = new()
+                    {
+                        Id = item.DataName,
+                        AxisTitle = item.DataName,
+                        Style = YAxisStyle,
+                        Name = item.DataName,
+                    };
                     Grid.SetRow(NewYAxix, CountGraph);
                     YAxes.Add(NewYAxix);
-                    IRenderableSeries NewSeries = new FastLineRenderableSeries()
+                    FastLineRenderableSeries NewSeries = new FastLineRenderableSeries()
                     {
                         YAxisId = item.DataName,
                         DataSeries = item.ChannelDataSeries,
                         Stroke = item.Stroke,
                     };
                     RenderableSeries.Add(NewSeries);
-                    CountGraph++;
+                    CountGraph += 2;
                 }
             }
-            YAxesPanelTemplate = HelperSciChartXaml.GetItemsPanelTemplate(CountGraph);
+
         }
     }
 }
